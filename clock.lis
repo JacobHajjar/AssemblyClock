@@ -1,0 +1,86 @@
+     1                                  ;Author information
+     2                                  ;  Author name: Jacob Hajjar
+     3                                  ;  CPSC240-1
+     4                                  ;  Author email: hajjarj@csu.fullerton.edu
+     5                                  ;  Program name: Execution Clock
+     6                                  
+     7                                  extern scanf
+     8                                  
+     9                                  extern printf
+    10                                  
+    11                                  global clock
+    12                                  
+    13                                  segment .data
+    14                                  
+    15 00000000 546865206375727265-     clock_time_message db "The current clock time is %d tics.", 10, 0
+    15 00000009 6E7420636C6F636B20-
+    15 00000012 74696D652069732025-
+    15 0000001B 6420746963732E0A00 
+    16                                  
+    17 00000024 257300                  stringform db "%s", 0
+    18                                  
+    19                                  segment .bss
+    20 00000000 <res 000000F0>          bottles resq 30
+    21 000000F0 <res 00000010>          title resd 4
+    22 00000100 <res 00000040>          resistance resq 8
+    23 00000140 <res 00000008>          current resb 8
+    24                                  
+    25                                  
+    26                                  segment .text
+    27                                  
+    28                                  clock: 
+    29                                  
+    30                                  ;register backup
+    31 00000000 B800000000              mov qword rax, 0
+    32                                  
+    33 00000005 55                      push rbp
+    34 00000006 4889E5                  mov rbp, rsp
+    35 00000009 53                      push rbx
+    36 0000000A 51                      push rcx
+    37 0000000B 52                      push rdx
+    38 0000000C 57                      push rdi
+    39 0000000D 56                      push rsi
+    40 0000000E 4150                    push r8
+    41 00000010 4151                    push r9
+    42 00000012 4152                    push r10
+    43 00000014 4153                    push r11
+    44 00000016 4154                    push r12
+    45 00000018 4155                    push r13
+    46 0000001A 4156                    push r14
+    47 0000001C 4157                    push r15
+    48 0000001E 9C                      pushf 
+    49                                  
+    50                                  ;get current tics
+    51 0000001F B800000000              mov rax, 0  
+    52 00000024 BA00000000              mov rdx, 0
+    53                                  ;cpuid                             
+    54 00000029 0F31                    rdtsc  ;finds current tics
+    55 0000002B 48C1E220                shl rdx, 32
+    56 0000002F 4801D0                  add rax, rdx
+    57                                  ;mov r13, rax
+    58                                  
+    59                                  ;print clock time message
+    60                                  ;mov rax, 0
+    61                                  ;mov rdi, clock_time_message
+    62                                  ;mov rsi, r13
+    63                                  ;call printf
+    64                                  
+    65                                  
+    66 00000032 9D                      popf
+    67 00000033 415F                    pop r15
+    68 00000035 415E                    pop r14
+    69 00000037 415D                    pop r13
+    70 00000039 415C                    pop r12
+    71 0000003B 415B                    pop r11
+    72 0000003D 415A                    pop r10
+    73 0000003F 4159                    pop r9
+    74 00000041 4158                    pop r8
+    75 00000043 5E                      pop rsi
+    76 00000044 5F                      pop rdi
+    77 00000045 5A                      pop rdx
+    78 00000046 59                      pop rcx
+    79 00000047 5B                      pop rbx
+    80 00000048 5D                      pop rbp     
+    81                                  
+    82 00000049 C3                      ret
+    83                                  
