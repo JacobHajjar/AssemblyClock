@@ -5,11 +5,11 @@
 //  Program name: Execution Time
 #include <stdio.h>
 
-int clock();
+double clock();
 
 int main(){
     printf("Welcome to Gravitational Experiments by Jacob Hajjar\n");
-    printf("The main function recieved %d and plans to keep it.\n", clock());
+    printf("The main function recieved %.2f and plans to keep it.\n", clock());
     printf("Zero wil be returned to the operating system\n");
     return 0;
 }
